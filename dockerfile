@@ -1,15 +1,15 @@
 FROM debian:jessie
 MAINTAINER Mitry Pyostrovsky <mitrypyostrovsky@gmail.com>
 
-## Update the system and install wget utilite
+## Стандартная процедура апдейта системы, а также установка утилиты Wget
 ##
-RUN    apt-get update \
-	&& apt-get dist-upgrade -y \
-	&& apt-get clean \
-	&& apt-get install -y wget locales \
-	&& apt-get clean
+RUN      apt-get update \
+        && apt-get dist-upgrade -y \
+        && apt-get clean \
+        && apt-get install -y wget locales \
+        && apt-get clean
 
-## Install nimble and move all config files to /etc/nimble.conf
+## Инсталляция "Nimble Streamer" и преренос конфигурационных файлов внутрь конейнера в /etc/nimble.conf
 ##
 RUN    echo "deb http://nimblestreamer.com/debian/ jessie/" > /etc/apt/sources.list.d/nimblestreamer.list \
     && wget -q -O - http://nimblestreamer.com/gpg.key | apt-key add - \
@@ -19,25 +19,28 @@ RUN    echo "deb http://nimblestreamer.com/debian/ jessie/" > /etc/apt/sources.l
     && mkdir /etc/nimble.conf \
     && mv /etc/nimble/* /etc/nimble.conf
 
-## Configuration volume
+## Создание отдельного волюма с папкой, содержащей настройки
 ##
 VOLUME /etc/nimble
 
-## Cache volume
+## Volume для кэша аудио и видеофайлов стриминга
 ##
 VOLUME /var/cache/nimble
 
-## WMS panel username and password
-## Only required for first time registration
+## WMS-panel: имя пользователя и пароль
+## Сперва Вы должны быть зарегистрированы на сайте wmspanel.com
+## Но это не обязательно, если Вы не собираетесь пользоваться WMS-панелью
 ##
-ENV WMSPANEL_USER	""
-ENV WMSPANEL_PASS	""
-ENV WMSPANEL_SLICES	""
+## ENV WMSPANEL_USER   ""
+## ENV WMSPANEL_PASS   ""
+## ENV WMSPANEL_SLICES ""
 
-## Service configuration
+## Файлы с конфигурацей сервиса (сервера)
 ##
-ADD files/my_init.d		/etc/my_init.d
-ADD files/service		/etc/service
-ADD files/logrotate.d	/etc/logrotate.d
+ADD files/my_init.d     /etc/my_init.d
+ADD files/service           /etc/service
+ADD files/logrotate.d   /etc/logrotate.d
 
+## Порты, выставляемые наружу контейнера
+##
 EXPOSE 1935 8081
