@@ -38,7 +38,7 @@ VOLUME /var/cache/nimble
 ## Файлы с конфигурацей сервиса (сервера)
 ##
 ADD files/my_init.d     /etc/my_init.d
-ADD files/service           /etc/service
+ADD files/service       /etc/service
 ADD files/logrotate.d   /etc/logrotate.d
 
 ## Порты, выставляемые наружу контейнера
