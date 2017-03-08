@@ -3,13 +3,13 @@ MAINTAINER Mitry Pyostrovsky <mitrypyostrovsky@gmail.com>
 
 ## Стандартная процедура апдейта системы, а также установка утилиты Wget
 ##
-RUN      apt-get update \
-        && apt-get dist-upgrade -y \
-        && apt-get clean \
-        && apt-get install -y wget locales \
-        && apt-get clean
+RUN    apt-get update \
+    && apt-get dist-upgrade -y \
+    && apt-get clean \
+    && apt-get install -y wget locales \
+    && apt-get clean
 
-## Инсталляция "Nimble Streamer" и преренос конфигурационных файлов внутрь конейнера в /etc/nimble.conf
+## Инсталляция "Nimble streaming server" и преренос конфигурационных файлов внутрь конейнера в /etc/nimble.conf
 ##
 RUN    echo "deb http://nimblestreamer.com/debian/ jessie/" > /etc/apt/sources.list.d/nimblestreamer.list \
     && wget -q -O - http://nimblestreamer.com/gpg.key | apt-key add - \
@@ -44,3 +44,7 @@ ADD files/logrotate.d   /etc/logrotate.d
 ## Порты, выставляемые наружу контейнера
 ##
 EXPOSE 1935 8081
+
+## Запустить "Nimble streaming server"
+##
+CMD bash -c "service nimble start tail -f /dev/null"
