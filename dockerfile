@@ -1,7 +1,7 @@
 FROM debian:jessie
 MAINTAINER Mitry Pyostrovsky <mitrypyostrovsky@gmail.com>
 
-## Стандартная процедура апдейта системы, а также установка утилиты Wget
+## Стандартная процедура апдейта системы, а также установка утилиты Wet
 ##
 RUN    apt-get update \
     && apt-get dist-upgrade -y \
