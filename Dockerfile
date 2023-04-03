@@ -1,5 +1,5 @@
 FROM debian:jessie
-MAINTAINER Mitry Pyostrovsky <mitrypyostrovsky@gmail.com>
+#MAINTAINER Mitry Pyostrovsky <mitrypyostrovsky@gmail.com>
 
 ## Стандартная процедура апдейта системы, а также установка утилиты Wet
 ##
